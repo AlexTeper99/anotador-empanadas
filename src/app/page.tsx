@@ -1,9 +1,10 @@
 "use server";
 
-import { getFlavours } from "@/lib/actions";
+import { getFlavours, testDBConnection } from "@/app/lib/actions";
 
 export default async function Home() {
   const flavours = await getFlavours();
+
   return (
     <main>
       <h1>Flavours</h1>
