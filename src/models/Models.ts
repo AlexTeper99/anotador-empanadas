@@ -16,16 +16,22 @@ interface Order {
   orderItem: OrderItem[];
 }
 
-const EmpanadaSchema = new Schema<Empanada>({
-  id: { type: Number, required: true },
-  name: { type: String, required: true },
-  quantity: { type: Number, required: true },
-});
+const EmpanadaSchema = new Schema<Empanada>(
+  {
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+    quantity: { type: Number, required: true },
+  },
+  { _id: false }
+);
 
-const OrderItemSchema = new Schema<OrderItem>({
-  name: { type: String, required: true },
-  empanadas: { type: [EmpanadaSchema], required: true },
-});
+const OrderItemSchema = new Schema<OrderItem>(
+  {
+    name: { type: String, required: true },
+    empanadas: { type: [EmpanadaSchema], required: true },
+  },
+  { _id: false }
+);
 
 const OrderSchema = new Schema<Order>({
   id: { type: String, required: true },
