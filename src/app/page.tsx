@@ -1,18 +1,19 @@
 "use server";
 
-import { getFlavours, testDBConnection } from "@/app/lib/actions";
+import { GetFlavours, TestDBConnection, CreateOrder } from "@/app/lib/actions";
 
 export default async function Home() {
-  const flavours = await getFlavours();
+  // const flavours = await GetFlavours();
+  //  const order = await CreateOrder();
 
   return (
     <main>
       <h1>Flavours</h1>
-      <ul>
+      {/* <ul>
         {flavours.map((flavour) => (
           <li key={flavour}>{flavour}</li>
         ))}
-      </ul>
+      </ul> */}
     </main>
   );
 }

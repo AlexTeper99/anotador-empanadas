@@ -14,6 +14,8 @@ interface OrderItem {
 interface Order {
   id: string;
   orderItem: OrderItem[];
+  isClosed: boolean;
+  ownerHash?: string;
 }
 
 const EmpanadaSchema = new Schema<Empanada>(
@@ -36,6 +38,8 @@ const OrderItemSchema = new Schema<OrderItem>(
 const OrderSchema = new Schema<Order>({
   id: { type: String, required: true },
   orderItem: { type: [OrderItemSchema], required: true },
+  isClosed: { type: Boolean, required: true },
+  ownerHash: { type: String, required: false },
 });
 
 const OrderModel = model<Order>("Order", OrderSchema);
