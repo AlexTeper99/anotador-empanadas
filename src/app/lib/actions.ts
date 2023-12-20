@@ -1,9 +1,9 @@
 "use server";
 
-import OrderModel from "@/models/Models";
 import connectDB from "./connection-db";
 import Script from "next/script";
 import { sha256 } from "crypto-hash";
+import { Order } from "@/models/Models";
 
 export const GetFlavours = async () => {
   console.log("getFlavours");
@@ -25,48 +25,52 @@ export const CreateOrder = async () => {
     console.log("createOrder");
     await connectDB();
 
-    //how can i check in the mongoose Order model in my db that i dont have the actual id?
+    // //how can i check in the mongoose Order model in my db that i dont have the actual id?
+    let id;
+    let obj = true;
+    while (obj) {
+      const newId = Math.random().toString(36).slice(2);
+      const order = await Order.findOne({ id: newId });
+      // id = newId;
 
-    const id = await GenerateNewId();
+      // if (id) {
+      //   obj = false;
+      // }
+      if (!order) {
+        obj = false;
+        id = newId;
+      }
+    }
 
-    // console.log("ownerHash", ownerHash);
-    //  console.log("id", id);
+    // // console.log("ownerHash", ownerHash);
+    //console.log("id", id);
 
-    const order = new OrderModel({
-      id: id,
+    const order = new Order({
+      id: "121321432",
       isClosed: false,
       orderItem: [],
     });
 
-    //order.set("ownerHash", order._id);
+    order.set("ownerHash", order._id);
     await order.save();
+    // console.log(order);
 
     //   return { id: order.id, ownerHash: order.ownerHash };
-    return "hola";
+    return JSON.parse(JSON.stringify("orden creada"));
   } catch (error) {
     return { error };
   }
 };
 
-const GenerateId = () => {
-  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-  let id = "";
-  for (let i = 0; i < 4; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    id += characters[randomIndex];
-  }
-  return id;
-};
+// const GenerateNewId = async () => {
+//   let obj = true;
+//   while (obj) {
+//     const newId = Math.random().toString(36).slice(2);
+//     const order = await Order.findById(newId);
 
-const GenerateNewId = async () => {
-  let obj = true;
-  while (obj) {
-    const newId = GenerateId();
-    const order = await OrderModel.findOne({ id: newId });
-
-    if (!order) {
-      obj = false;
-      return newId;
-    }
-  }
-};
+//     if (!order) {
+//       obj = false;
+//       return newId;
+//     }
+//   }
+// };
